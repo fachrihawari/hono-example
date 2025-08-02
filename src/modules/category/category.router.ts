@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { categoryController } from "./category.controller";
-zValidator
 import { categorySchema } from "./category.schema";
 import { zValidator } from "../../libraries/zod-validatior.library";
 
