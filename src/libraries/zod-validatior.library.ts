@@ -1,8 +1,7 @@
-import z, { ZodType } from 'zod';
+import type { ZodType } from 'zod';
 import type { ValidationTargets } from 'hono';
 import { zValidator as zv } from '@hono/zod-validator';
 import { HTTPException } from 'hono/http-exception';
-import { is } from 'zod/locales';
 
 export const zValidator = <
   T extends ZodType,
@@ -11,13 +10,13 @@ export const zValidator = <
   target: Target,
   schema: T,
 ) =>
-  zv(target, schema, (result, c) => {
+  zv(target, schema, (result) => {
     if (!result.success) {
       const cause = result.error.issues.reduce(
-        (issue, c) => ({
-          ...issue,
-          [c.path.join('.')]: c.message,
-        }),
+        (issue: Record<string, string>, c) => {
+          issue[c.path.join('.')] = c.message;
+          return issue;
+        },
         {},
       );
       throw new HTTPException(400, { message: 'Validation failed', cause });

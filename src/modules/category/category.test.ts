@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
 import app from '../../main';
-import { type ICategory } from './category.model';
+import type { ICategory } from './category.model';
 import { DB } from 'mongoloquent';
 
 describe('Category API integration', () => {

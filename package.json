@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun run --watch src/main.ts",
     "start": "bun src/main.ts",
-    "format": "biome format",
+    "tidy": "biome format --fix && biome lint --fix",
     "seed": "bun run src/seed.ts"
   },
   "devDependencies": {
