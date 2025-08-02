@@ -1,6 +1,12 @@
-import { Model, type IMongoloquentSchema, type IMongoloquentTimestamps } from "mongoloquent";
+import {
+  Model,
+  type IMongoloquentSchema,
+  type IMongoloquentTimestamps,
+} from 'mongoloquent';
 
-export interface ICategory extends IMongoloquentSchema, IMongoloquentTimestamps {
+export interface ICategory
+  extends IMongoloquentSchema,
+    IMongoloquentTimestamps {
   name: string;
 }
 

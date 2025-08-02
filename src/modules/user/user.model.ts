@@ -1,4 +1,8 @@
-import { Model, type IMongoloquentSchema, type IMongoloquentTimestamps } from "mongoloquent";
+import {
+  Model,
+  type IMongoloquentSchema,
+  type IMongoloquentTimestamps,
+} from 'mongoloquent';
 
 interface IUser extends IMongoloquentSchema, IMongoloquentTimestamps {
   name: string;

@@ -1,11 +1,11 @@
-import type { Context } from "hono";
-import { User } from "~/modules/user/user.model";
-import { HTTPException } from "hono/http-exception";
-import { sign } from "hono/jwt";
+import type { Context } from 'hono';
+import { User } from '~/modules/user/user.model';
+import { HTTPException } from 'hono/http-exception';
+import { sign } from 'hono/jwt';
 
 class AuthController {
   async login(c: Context) {
-    const { email, password } = await c.req.json()
+    const { email, password } = await c.req.json();
 
     const user = await User.where('email', email).first();
 
@@ -19,7 +19,7 @@ class AuthController {
       throw new HTTPException(401, { message: 'Invalid email or password' });
     }
 
-    const accessToken = await sign({ _id: user._id }, Bun.env.JWT_SECRET)
+    const accessToken = await sign({ _id: user._id }, Bun.env.JWT_SECRET);
 
     return c.json({ accessToken });
   }
