@@ -1,6 +1,6 @@
 import type { Context } from 'hono';
-import { Category } from './category.model';
 import { HTTPException } from 'hono/http-exception';
+import { Category } from './category.model';
 
 class CategoryController {
   async all(c: Context) {

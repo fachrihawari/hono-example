@@ -1,11 +1,11 @@
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
-
-import { authRouter } from './modules/auth/auth.router';
-import { errorMiddleware } from './middlewares/error.middleware';
-import { categoryRouter } from './modules/category/category.router';
 import { cors } from 'hono/cors';
 import { prettyJSON } from 'hono/pretty-json';
+
+import { authRouter } from './auth/auth.router';
+import { categoryRouter } from './category/category.router';
+import { errorMiddleware } from './shared/error.middleware';
 
 const app = new Hono();
 

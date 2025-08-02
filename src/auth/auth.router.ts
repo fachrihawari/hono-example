@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { zValidator } from '~/libraries/zod-validatior.library';
+import { zValidator } from '~/shared/zod-validatior.library';
 import { authController } from './auth.controller';
 import { loginSchema } from './auth.schema';
 

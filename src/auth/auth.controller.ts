@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { User } from '~/modules/user/user.model';
+import { User } from '~/user/user.model';
 import { HTTPException } from 'hono/http-exception';
 import { sign } from 'hono/jwt';
 

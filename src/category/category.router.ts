@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { categoryController } from './category.controller';
 import { categorySchema } from './category.schema';
-import { zValidator } from '../../libraries/zod-validatior.library';
+import { zValidator } from '~/shared/zod-validatior.library';
 
 const categoryRouter = new Hono();
 

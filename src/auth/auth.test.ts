@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
-import app from '../../main';
+import app from '../main';
 import { DB } from 'mongoloquent';
 
 const TEST_EMAIL = 'testuser@example.com';
