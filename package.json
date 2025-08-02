@@ -3,10 +3,21 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bun run --watch src/main.ts",
+    "start": "bun src/main.ts",
+    "seed": "bun run src/seed.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.2",
+    "hono": "^4.8.12",
+    "mongoloquent": "^3.6.0",
+    "zod": "^4.0.14"
   }
 }
