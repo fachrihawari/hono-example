@@ -2,9 +2,11 @@ import { Hono } from 'hono';
 import { categoryController } from './category.controller';
 import { categorySchema } from './category.schema';
 import { zValidator } from '~/shared/zod-validatior.library';
+import { authMiddleware } from '~/shared/auth.middleware';
 
 const categoryRouter = new Hono();
 
+categoryRouter.use('*', authMiddleware); // Apply auth middleware to all routes
 categoryRouter.get('/', categoryController.all);
 categoryRouter.get('/:id', categoryController.show);
 categoryRouter.post(

@@ -4,7 +4,7 @@ import {
   type IMongoloquentTimestamps,
 } from 'mongoloquent';
 
-interface IUser extends IMongoloquentSchema, IMongoloquentTimestamps {
+export interface IUser extends IMongoloquentSchema, IMongoloquentTimestamps {
   name: string;
   email: string;
   password: string;

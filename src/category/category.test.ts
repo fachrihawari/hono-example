@@ -2,6 +2,10 @@ import { describe, it, expect, beforeAll, afterAll } from 'bun:test';
 import app from '../main';
 import type { ICategory } from './category.model';
 import { DB } from 'mongoloquent';
+import type { IUser } from '~/user/user.model';
+import { signToken } from '~/shared/jwt.helper';
+
+let accessToken: string;
 
 describe('Category API integration', () => {
   beforeAll(async () => {
@@ -9,6 +13,12 @@ describe('Category API integration', () => {
     await DB.collection('categories').insert({
       name: 'TestCategory',
     });
+
+    const user = (await DB.collection('users').insert({
+      email: 'test@example.com',
+      password: await Bun.password.hash('password'),
+    })) as IUser;
+    accessToken = await signToken({ sub: user._id.toString() });
   });
 
   afterAll(async () => {
@@ -17,7 +27,11 @@ describe('Category API integration', () => {
   });
 
   it('GET /categories should return all categories', async () => {
-    const res = await app.request('/categories');
+    const res = await app.request('/categories', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     expect(res.status).toBe(200);
 
     const data = (await res.json()) as ICategory[];
@@ -32,7 +46,10 @@ describe('Category API integration', () => {
     const res = await app.request('/categories', {
       method: 'POST',
       body: JSON.stringify({ name: 'AnotherCategory' }),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
     // Check response
     expect(res.status).toBe(201);
@@ -51,7 +68,10 @@ describe('Category API integration', () => {
     const res = await app.request('/categories', {
       method: 'POST',
       body: JSON.stringify({}), // missing name
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     // Check response
@@ -68,7 +88,10 @@ describe('Category API integration', () => {
     const res = await app.request('/categories', {
       method: 'POST',
       body: JSON.stringify({ name: 'ab' }), // short name
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     // Check response
@@ -86,7 +109,9 @@ describe('Category API integration', () => {
   });
 
   it('GET /categories/:id should return a category', async () => {
-    const res = await app.request(`/categories/${createdId}`);
+    const res = await app.request(`/categories/${createdId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
     expect(res.status).toBe(200);
     const data = (await res.json()) as ICategory;
     expect(data).toHaveProperty('name', 'AnotherCategory');
@@ -97,7 +122,10 @@ describe('Category API integration', () => {
     const res = await app.request(`/categories/${createdId}`, {
       method: 'PUT',
       body: JSON.stringify({ name: 'UpdatedCategory' }),
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     // Check response
@@ -114,6 +142,7 @@ describe('Category API integration', () => {
   it('DELETE /categories/:id should delete a category', async () => {
     const res = await app.request(`/categories/${createdId}`, {
       method: 'DELETE',
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
 
     // Check response
