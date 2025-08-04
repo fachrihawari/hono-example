@@ -1,4 +1,4 @@
-# pawship-server
+# Hono Example
 
 To install dependencies:
 

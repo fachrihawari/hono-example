@@ -15,7 +15,7 @@ app.use(cors());
 app.use(prettyJSON());
 
 // Root routes
-app.get('/', (c) => c.json({ message: 'Welcome to pawship server!' }));
+app.get('/', (c) => c.json({ message: 'Welcome to hono example!' }));
 
 // Auth routes
 app.route('/auth', authRouter);
